@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
+from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
 from prettymapp.geo import get_aoi, GeoCodingError
 from prettymapp.osm import get_osm_geometries
@@ -7,8 +8,12 @@ from prettymapp.settings import STYLES
 import matplotlib.pyplot as plt
 import io
 import base64
+import os
 
 app = FastAPI()
+
+API_KEY = os.getenv("API_KEY")
+api_key_header = APIKeyHeader(name="X-API-Key")
 
 class MapRequest(BaseModel):
     location: str
@@ -16,7 +21,10 @@ class MapRequest(BaseModel):
     style: str
 
 @app.post("/")
-async def generate_map(request: MapRequest):
+async def generate_map(request: MapRequest, api_key: str = Depends(api_key_header)):
+    if api_key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API Key")
+
     try:
         aoi = get_aoi(address=request.location, radius=request.radius)
     except GeoCodingError as e:

@@ -58,6 +58,16 @@ uvicorn api:app --reload
 
 3. The FastAPI application will be available at `http://127.0.0.1:8000/`.
 
+4. Set up the API Key:
+
+Create a `.env` file in the root directory of the project and add the following line:
+
+```plaintext
+API_KEY=your_api_key_here
+```
+
+Replace `your_api_key_here` with your actual API Key.
+
 ## Python package
 
 You can also use prettymapp without the webapp, directly in Python. This lets you customize the functionality or 
