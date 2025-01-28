@@ -40,6 +40,24 @@ pip install -r streamlit-prettymapp/requirements.txt
 streamlit run streamlit-prettymapp/app.py
 ```
 
+## Running the FastAPI application
+
+To run the FastAPI application, follow these steps:
+
+1. Install the required dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+2. Start the FastAPI application using Uvicorn:
+
+```bash
+uvicorn api:app --reload
+```
+
+3. The FastAPI application will be available at `http://127.0.0.1:8000/`.
+
 ## Python package
 
 You can also use prettymapp without the webapp, directly in Python. This lets you customize the functionality or 
